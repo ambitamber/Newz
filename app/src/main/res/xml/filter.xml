@@ -1,0 +1,29 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Filter Setting"
+        android:layout="@layout/preferences_category">
+        <ListPreference
+            android:defaultValue="@string/settings_sort_by_default"
+            android:entries="@array/settings_sort_by_labels"
+            android:entryValues="@array/settings_sort_by_values"
+            android:key="@string/settings_sort_by_key"
+            android:title="@string/settings_sort_by_label" />
+
+        <ListPreference
+            android:entries="@array/setting_language_labels"
+            android:entryValues="@array/setting_language_values"
+            android:defaultValue="@string/settings_language_default"
+            android:key="@string/settings_language_key"
+            android:title="@string/settings_language_label"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/settings_min_result_default"
+            android:inputType="numberDecimal"
+            android:key="@string/settings_min_result_key"
+            android:selectAllOnFocus="true"
+            android:title="@string/settings_min_result_label" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

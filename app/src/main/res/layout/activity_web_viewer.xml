@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WebViewer">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/webviewer_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
+                app:toolbarId="@id/webviewer_toolbar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/appBarImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:transitionName="thumbnail"
+                        android:tint="#5F000000"
+                        android:src="@drawable/example" />
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/webviewer_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:layout_collapseMode="pin">
+
+                    <TextView
+                        android:id="@+id/toolbar_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/webview_nested" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/baseline_share_24"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_anchor="@id/webviewer_appbar"
+            app:layout_anchorGravity="bottom|right|end" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ProgressBar
+        android:id="@+id/webviewer_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateDrawable="@drawable/redprogress"
+        android:layout_centerInParent="true" />
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3353577749750836/7736824604">
+    </com.google.android.gms.ads.AdView>
+    <FrameLayout
+        android:id="@+id/no_internt_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <include layout="@layout/nonetworkview" />
+    </FrameLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:divider="#AFAFAF">
+    <PreferenceCategory
+        android:title="@string/accountsetting"
+        android:layout="@layout/preferences_category">
+        <Preference
+            android:title="@string/sign_in"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:key="key_sign_in"
+            android:summary="Sign into account to view saved articles and manage your account."/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/general"
+        android:layout="@layout/preferences_category">
+        <ListPreference
+            android:entries="@array/country_labels"
+            android:entryValues="@array/country_value"
+            android:defaultValue="@string/settings_language_default"
+            android:key="charge_country"
+            android:icon="@drawable/ic_baseline_location_on_24"
+            android:summary="Charge Country"
+            android:title="@string/country"/>
+        <Preference
+            android:title="@string/share_newz"
+            android:icon="@drawable/ic_outline_share_24"
+            android:key="key_share_newz"
+            android:summary="Quick link to pass to your friends and family"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Newz"
+        android:layout="@layout/preferences_category">
+        <Preference
+            android:title="@string/about"
+            android:icon="@drawable/ic_baseline_about_24"
+            android:key="key_about_newz"
+            android:summary="Credits and Powered by"/>
+        <Preference
+            android:title="@string/version"
+            android:icon="@drawable/ic_baseline_code_24"
+            android:key="version_number"
+            android:summary="v1.0"/>
+        <Preference
+            android:title="@string/feedback"
+            android:icon="@drawable/ic_baseline_feedback_24"
+            android:key="key_send_feedback"
+            android:summary="If you have any question or want to contact us, please send us an email."/>
+    </PreferenceCategory>
+</PreferenceScreen>

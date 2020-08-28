@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tamberlab.newz">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name="com.tamberlab.newz.widget.MyApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icon_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/icon_logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name="com.tamberlab.newz.firebaselogins.PersonInfo"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name="com.tamberlab.newz.prefrences.PreferencesSetting"
+            android:label="Filters" />
+        <activity android:name="com.tamberlab.newz.firebaselogins.LoginActivity" />
+        <activity
+            android:name="com.tamberlab.newz.SplashScreen"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tamberlab.newz.About" />
+        <activity
+            android:name="com.tamberlab.newz.WebViewer"
+            android:launchMode="singleTop" />
+        <activity android:name="com.tamberlab.newz.MainActivity" />
+
+        <receiver android:name="com.tamberlab.newz.widget.NewzWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/newzwidget" />
+        </receiver>
+        <service
+            android:name="com.tamberlab.newz.widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3353577749750836~9019607375"/>
+    </application>
+</manifest>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="3dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:cardElevation="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ripple">
+
+            <ImageView
+                android:id="@+id/thumbnail_IV"
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/example" />
+
+            <TextView
+                android:id="@+id/source_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/custom_background_red"
+                android:gravity="right"
+                android:padding="5dp"
+                android:text="@string/source_name"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:elevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_TV"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/title"
+                android:textColor="#E35F5F"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/thumbnail_IV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/thumbnail_IV"
+                app:layout_constraintTop_toBottomOf="@+id/source_TV"
+                app:layout_constraintVertical_weight="1" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/thumbnail_IV">
+
+                <Button
+                    android:id="@+id/share_IV"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_outline_share_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/publishedAt_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_background_white"
+                    android:padding="4dp"
+                    android:text="@string/publish_date"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/publishedAt_TV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/publishedAt_TV"
+                    app:srcCompat="@drawable/ic_baseline_date_range_24" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar_image"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/redprogress"
+                app:layout_constraintBottom_toBottomOf="@+id/thumbnail_IV"
+                app:layout_constraintEnd_toEndOf="@+id/thumbnail_IV"
+                app:layout_constraintStart_toStartOf="@+id/thumbnail_IV"
+                app:layout_constraintTop_toTopOf="@+id/thumbnail_IV" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

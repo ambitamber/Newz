@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".firebaselogins.PersonInfo">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/person_info_AppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="244dp"
+                app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
+                app:toolbarId="@id/person_info_Toolbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="104dp"
+                    android:layout_gravity="bottom">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chargePasswordcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ripple"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:src="@drawable/person_info"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:text="@string/chargepassword"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView6"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/signOutcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/ripple"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/chargePasswordcon">
+
+                        <ImageView
+                            android:id="@+id/imageView9"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:src="@drawable/ic_baseline_out_24"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:text="@string/signout"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView9"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/person_info_Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    app:layout_collapseMode="pin"
+
+                    app:theme="@style/ToolbarColoredBackArrow">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="60dp">
+
+                        <TextView
+                            android:id="@+id/userEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/email"
+                            android:textColor="@android:color/black"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                            app:layout_constraintStart_toStartOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/name_tv" />
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="131dp"
+                            android:layout_height="67dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/person_info" />
+
+                        <TextView
+                            android:id="@+id/name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/name"
+                            android:textColor="@android:color/black"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                            app:layout_constraintStart_toStartOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/person_info_Recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:animateLayoutChanges="false"
+            android:background="#EAEAEA"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+        <FrameLayout
+            android:id="@+id/no_internt_layout"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:visibility="gone"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <include layout="@layout/nonetworkview" />
+        </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</RelativeLayout>

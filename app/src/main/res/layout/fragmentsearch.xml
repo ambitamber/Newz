@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/search_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_appbar"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="3dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="italic|bold"
+        android:layout_marginStart="3dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_Recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_results" />
+
+    <TextView
+        android:id="@+id/search_ErrorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_internet"
+        android:visibility="invisible" />
+
+    <ProgressBar
+        android:id="@+id/search_Progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/redprogress"
+        android:visibility="invisible" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/toolbar_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/search_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_viewSV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/search_Filter"
+                android:layout_width="45dp"
+                android:layout_height="?attr/actionBarSize"
+                android:src="@drawable/ic_baseline_filter_list_24" />
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</RelativeLayout>

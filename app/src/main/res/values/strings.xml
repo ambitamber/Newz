@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">Newz</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="no_internet_connection">It seems you don\'t internet connection.</string>
+    <string name="search_filter">Search Filter</string>
+    <string name="share_link">Share link</string>
+    <string name="service_not_available">Service not available</string>
+    <string name="no_address_found">No address found</string>
+    <string name="try_again">Try Again</string>
+    <string name="save">Save</string>
+    <string name="saved_articles">Saved Articles</string>
+
+    <!-- Strings for About Activity -->
+    <string name="made_with">Made with</string>
+    <string name="tamber_labs">Tamber Labs</string>
+    <string name="made_by">Made by</string>
+    <string name="news_api">-<u> NEWS API</u></string>
+    <string name="slack">-<u> Slack Overflow</u></string>
+    <string name="free_logo">-<u> Free Logo Design</u></string>
+    <string name="udacity">-<u> Udacity\'s Android Developer</u></string>
+    <string name="material_design">-<u> Material Design</u></string>
+    <string name="github">-<u> Github</u></string>
+    <string name="android_studio">-<u> Android Studio</u></string>
+
+    <!-- Strings For Sort By [CHAR LIMIT=30] -->
+    <string name="settings_sort_by_label">Sort By</string>
+    <string name="settings_sort_by_key" translatable="false">sort_by</string>
+    <string name="settings_sort_by_default" translatable="false">@string/settings_sort_by_publishedAt_value</string>
+    <!-- Label for sort-by Relevancy option [CHAR LIMIT=20] -->
+    <string name="settings_sort_by_relevancy_label">Relevancy</string>
+    <string name="settings_sort_by_relevancy_value" translatable="false">relevancy</string>
+    <!-- Label for sort-by popularity option [CHAR LIMIT=20] -->
+    <string name="settings_sort_by_popularity_label">Popularity</string>
+    <string name="settings_sort_by_popularity_value" translatable="false">popularity</string>
+    <!-- Label for sort-by popularity option [CHAR LIMIT=20] -->
+    <string name="settings_sort_by_publishedAt_label">Published At</string>
+    <string name="settings_sort_by_publishedAt_value" translatable="false">publishedAt</string>
+
+    <!-- Strings For Minimum Magnitude Preference [CHAR LIMIT=30] -->
+    <string name="settings_min_result_label">Results Size</string>
+    <string name="settings_min_result_key" translatable="false">min_result</string>
+    <string name="settings_min_result_default" translatable="false">20</string>
+
+    <!-- Strings For language [CHAR LIMIT=30] -->
+    <string name="settings_language_label">Language</string>
+    <string name="settings_language_key" translatable="false">language</string>
+    <string name="settings_language_default" translatable="false">@string/settings_language_en_value</string>
+    <!-- Label for sort-by France option [CHAR LIMIT=20] -->
+    <string name="settings_language_fr_label">France</string>
+    <string name="settings_language_fr_value" translatable="false">fr</string>
+    <!-- Label for sort-by English option [CHAR LIMIT=20] -->
+    <string name="settings_language_en_label">English</string>
+    <string name="settings_language_en_value" translatable="false">en</string>
+    <!-- Label for sort-by Dutch option [CHAR LIMIT=20] -->
+    <string name="settings_language_de_label">Dutch</string>
+    <string name="settings_language_de_value" translatable="false">de</string>
+    <!-- Label for sort-by Spanish option [CHAR LIMIT=20] -->
+    <string name="settings_language_es_label">Spanish</string>
+    <string name="settings_language_es_value" translatable="false">es</string>
+
+    <!-- For Signup activity-->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_new">New here! Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="title">Title</string>
+    <string name="saved_news">Saved News</string>
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="signout">Sign Out</string>
+    <string name="chargepassword">Charge Password</string>
+    <string name="not_the_first_time">Not the First Time Here? Log in.</string>
+    <string name="create_account">Create a New Account</string>
+
+    <!-- For MoreFragment -->
+    <string name="accountsetting">Account Setting</string>
+    <string name="general">General Setting</string>
+    <string name="country">Country</string>
+    <string name="about">About Newz</string>
+    <string name="share_newz">Share Newz App</string>
+    <string name="version">Version</string>
+    <string name="feedback">Send a feedback</string>
+
+    <!-- For list.xml -->
+    <string name="source_name">Source Name</string>
+    <string name="publish_date">Publish Date</string>
+    <string name="desciption">Desciption</string>
+</resources>
