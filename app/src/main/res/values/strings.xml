@@ -86,4 +86,13 @@
     <string name="source_name">Source Name</string>
     <string name="publish_date">Publish Date</string>
     <string name="desciption">Desciption</string>
+    <string name="setting">Setting</string>
+    <string name="home">Home</string>
+    <string name="local">Local</string>
+
+    <!-- For Local -->
+    <string name="getnewsaround">Get local news &amp; Nearby</string>
+    <string name="get_news_for_current_location">Get News for Current Location</string>
+    <string name="detect_nearby_locations">Detect Nearby Locations</string>
+    <string name="get_the_newest_news_at_your_location">Get the newest News at your Location</string>
 </resources>

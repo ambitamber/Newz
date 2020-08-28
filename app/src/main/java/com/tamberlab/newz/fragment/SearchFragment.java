@@ -57,10 +57,6 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-    @BindView(R.id.search_appbar)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.search_toolbar)
-    Toolbar toolbar;
     @BindView(R.id.search_ErrorTV)
     TextView errorTV;
     @BindView(R.id.search_Progressbar)
@@ -69,10 +65,6 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
     RecyclerView recyclerView;
     @BindView(R.id.search_results)
     TextView searchResults;
-    @BindView(R.id.search_viewSV)
-    MaterialSearchView searchView;
-    @BindView(R.id.search_Filter)
-    ImageView search_Filter;
 
     GridLayoutManager gridLayoutManager;
     private ArrayList<Articles> articlesArrayList;
@@ -103,14 +95,7 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
 
         ButterKnife.bind(this,view);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle(null);
-        search_Filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),PreferencesSetting.class));
-            }
-        });
+
         if (dataAvailable){
             setupSharedPreferences(mQuery);
         }else {
@@ -197,19 +182,7 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
         if (mQuery != null){
             setupSharedPreferences(mQuery);
         }
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                mQuery = query;
-                setupSharedPreferences(mQuery);
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
     }
 
     @Override
@@ -217,7 +190,6 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.search_fragment_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(menuItem);
     }
 
     private void onClicked(ArrayList<Articles> articles){

@@ -1,19 +1,17 @@
 package com.tamberlab.newz;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.tamberlab.newz.adapter.BottomNavFragmentAdapter;
-import com.tamberlab.newz.fragment.HomeFragment;
-import com.tamberlab.newz.fragment.MoreFragment;
-import com.tamberlab.newz.fragment.SearchFragment;
-import com.tamberlab.newz.utils.NoSwipePager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.tamberlab.newz.fragment.HomeFragment;
+import com.tamberlab.newz.fragment.LocalFragment;
+import com.tamberlab.newz.fragment.MoreFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,13 +20,12 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
-    @BindView(R.id.container)
-    NoSwipePager viewPager;
 
-    private BottomNavFragmentAdapter pagerAdapter;
     HomeFragment homeFragment = new HomeFragment();
-    SearchFragment searchFragment = new SearchFragment();
+    LocalFragment localFragment = new LocalFragment();
     MoreFragment moreFragment = new MoreFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +33,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setPagingEnabled(false);
-        pagerAdapter = new BottomNavFragmentAdapter(getSupportFragmentManager());
-
-        pagerAdapter.addFragments(homeFragment);
-        pagerAdapter.addFragments(searchFragment);
-        pagerAdapter.addFragments(moreFragment);
-
-        viewPager.setAdapter(pagerAdapter);
+        fm.beginTransaction().add(R.id.main_Container, moreFragment, "3").hide(moreFragment).commit();
+        fm.beginTransaction().add(R.id.main_Container, localFragment, "2").hide(localFragment).commit();
+        fm.beginTransaction().add(R.id.main_Container,homeFragment, "1").commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_home:
-                        viewPager.setCurrentItem(0);
+                        fm.beginTransaction().hide(active).show(homeFragment).commit();
+                        active = homeFragment;
                         return true;
-                    case R.id.navigation_search:
-                        viewPager.setCurrentItem(1);
+                    case R.id.navigation_local:
+                        fm.beginTransaction().hide(active).show(localFragment).commit();
+                        active = localFragment;
                         return true;
                     case R.id.navigation_more:
-                        viewPager.setCurrentItem(2);
+                        fm.beginTransaction().hide(active).show(moreFragment).commit();
+                        active = moreFragment;
                         return true;
                 }
                 return false;
