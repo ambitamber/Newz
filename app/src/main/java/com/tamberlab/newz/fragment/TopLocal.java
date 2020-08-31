@@ -177,6 +177,9 @@ public class TopLocal extends Fragment implements GoogleApiClient.ConnectionCall
             @Override
             public void onLocationAvailability(LocationAvailability locationAvailability) {
                 super.onLocationAvailability(locationAvailability);
+                if (locationAvailability.isLocationAvailable()){
+                    Log.d("LOCATION", "Location is available and locationAvailability is " + locationAvailability.isLocationAvailable());
+                }
             }
         };
         LocationServices.getFusedLocationProviderClient(getActivity())

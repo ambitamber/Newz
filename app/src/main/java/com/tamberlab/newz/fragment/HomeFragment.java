@@ -26,8 +26,6 @@ public class HomeFragment  extends Fragment {
     ViewPager viewPager;
     @BindView(R.id.tabs)
     TabLayout tabLayout;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.appbar)
     AppBarLayout appBarLayout;
 
@@ -52,8 +50,6 @@ public class HomeFragment  extends Fragment {
         viewPager.setAdapter(tabAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         return view;
     }

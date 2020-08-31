@@ -37,10 +37,7 @@ import butterknife.ButterKnife;
 
 public class MoreFragment extends Fragment {
 
-    @BindView(R.id.settingToolbar)
-    Toolbar toolbar;
-    @BindView(R.id.settingAppbar)
-    AppBarLayout appBarLayout;
+
     FragmentManager fragmentManager;
 
     public MoreFragment(){

@@ -156,7 +156,7 @@ public class WebViewer extends AppCompatActivity {
             }
         });
 
-        MobileAds.initialize(this, "ca-app-pub-3353577749750836~9019607375");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         loadWebViewer();
