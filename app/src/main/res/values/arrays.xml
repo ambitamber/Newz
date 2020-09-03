@@ -24,9 +24,4 @@
         <item>@string/settings_language_fr_value</item>
         <item>@string/settings_language_es_value</item>
     </string-array>
-    <string-array name="country_labels">
-        <item>Coming Soon</item>
-    </string-array>
-    <string-array name="country_value">
-    </string-array>
 </resources>

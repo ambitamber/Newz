@@ -84,7 +84,7 @@ public class TopSports extends Fragment {
     private void getDate(){
         if (NetworkCheck.isUp(getContext())){
             SportsViewModel sportsViewModel = new ViewModelProvider(requireActivity()).get(SportsViewModel.class);
-            sportsViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            sportsViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

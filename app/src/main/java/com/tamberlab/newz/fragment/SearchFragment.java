@@ -188,8 +188,8 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.search_fragment_menu,menu);
-        MenuItem menuItem = menu.findItem(R.id.action_search);
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem menuItem = menu.findItem(R.id.app_bar_search);
     }
 
     private void onClicked(ArrayList<Articles> articles){

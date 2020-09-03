@@ -84,7 +84,7 @@ public class TopScience extends Fragment {
     private void getData(){
         if (NetworkCheck.isUp(getContext())){
             ScienceViewModel scienceViewModel = new ViewModelProvider(requireActivity()).get(ScienceViewModel.class);
-            scienceViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            scienceViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

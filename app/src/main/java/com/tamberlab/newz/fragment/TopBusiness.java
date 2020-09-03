@@ -90,7 +90,7 @@ public class TopBusiness extends Fragment {
     private void getData(){
         if (NetworkCheck.isUp(getContext())){
             BusinessViewModel businessViewModel = new ViewModelProvider(requireActivity()).get(BusinessViewModel.class);
-            businessViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            businessViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

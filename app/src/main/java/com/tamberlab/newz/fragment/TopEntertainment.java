@@ -92,7 +92,7 @@ public class TopEntertainment extends Fragment {
     private void getData(){
         if (NetworkCheck.isUp(getContext())){
             EntertainmentViewModel entertainmentViewModel = new ViewModelProvider(requireActivity()).get(EntertainmentViewModel.class);
-            entertainmentViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            entertainmentViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

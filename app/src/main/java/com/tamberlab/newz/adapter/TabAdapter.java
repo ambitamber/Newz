@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.tamberlab.newz.fragment.TopBusiness;
 import com.tamberlab.newz.fragment.TopEntertainment;
 import com.tamberlab.newz.fragment.TopHealth;
-import com.tamberlab.newz.fragment.TopLocal;
 import com.tamberlab.newz.fragment.TopScience;
 import com.tamberlab.newz.fragment.TopSports;
 import com.tamberlab.newz.fragment.TopTechnology;
@@ -29,24 +28,21 @@ public class TabAdapter extends FragmentPagerAdapter{
                 fragment = new TopHeadlines();
                 break;
             case 1:
-                fragment = new TopLocal();
-                break;
-            case 2:
                 fragment = new TopBusiness();
                 break;
-            case 3:
+            case 2:
                 fragment = new TopEntertainment();
                 break;
-            case 4:
+            case 3:
                 fragment = new TopSports();
                 break;
-            case 5:
+            case 4:
                 fragment = new TopTechnology();
                 break;
-            case 6:
+            case 5:
                 fragment = new TopScience();
                 break;
-            case 7:
+            case 6:
                 fragment = new TopHealth();
                 break;
         }
@@ -56,7 +52,7 @@ public class TabAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 8;
+        return 7;
     }
 
     @Override
@@ -67,24 +63,21 @@ public class TabAdapter extends FragmentPagerAdapter{
                 title = "Top Headlines";
                 break;
             case 1:
-                title = "Local";
-                break;
-            case 2:
                 title = "Business";
                 break;
-            case 3:
+            case 2:
                 title = "Entertainment";
                 break;
-            case 4:
+            case 3:
                 title = "Sports";
                 break;
-            case 5:
+            case 4:
                 title = "Technology";
                 break;
-            case 6:
+            case 5:
                 title = "Science";
                 break;
-            case 7:
+            case 6:
                 title = "Health";
                 break;
         }

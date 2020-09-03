@@ -14,14 +14,11 @@
     <PreferenceCategory
         android:title="@string/general"
         android:layout="@layout/preferences_category">
-        <ListPreference
-            android:entries="@array/country_labels"
-            android:entryValues="@array/country_value"
-            android:defaultValue="@string/settings_language_default"
-            android:key="charge_country"
-            android:icon="@drawable/ic_baseline_location_on_24"
-            android:summary="Charge Country"
-            android:title="@string/country"/>
+        <Preference
+            android:title="Theme Setting"
+            android:icon="@drawable/ic_baseline_color_lens_24"
+            android:key="key_theme"
+            android:summary="Coming Soon"/>
         <Preference
             android:title="@string/share_newz"
             android:icon="@drawable/ic_outline_share_24"
@@ -40,7 +37,7 @@
             android:title="@string/version"
             android:icon="@drawable/ic_baseline_code_24"
             android:key="version_number"
-            android:summary="v1.0"/>
+            android:summary="version"/>
         <Preference
             android:title="@string/feedback"
             android:icon="@drawable/ic_baseline_feedback_24"

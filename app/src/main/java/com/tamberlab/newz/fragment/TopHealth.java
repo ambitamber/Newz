@@ -81,7 +81,7 @@ public class TopHealth extends Fragment {
     private void getData(){
         if (NetworkCheck.isUp(getContext())){
             HealthViewModel healthViewModel = new ViewModelProvider(requireActivity()).get(HealthViewModel.class);
-            healthViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            healthViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

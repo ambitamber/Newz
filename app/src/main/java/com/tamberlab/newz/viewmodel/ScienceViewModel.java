@@ -1,5 +1,7 @@
 package com.tamberlab.newz.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,11 +19,11 @@ import retrofit2.Response;
 public class ScienceViewModel extends ViewModel {
     private MutableLiveData<News> newsMutableLiveData;
 
-    public LiveData<News> getNews() {
+    public LiveData<News> getNews(Context context) {
 
         if (newsMutableLiveData == null){
             newsMutableLiveData = new MutableLiveData<>();
-            APIClient.getHeadlineCall(Constants.SCIENCE).enqueue(new Callback<News>() {
+            APIClient.getHeadlineCall(Constants.SCIENCE,context).enqueue(new Callback<News>() {
                 @Override
                 public void onResponse(@NotNull Call<News> call, @NotNull Response<News> response) {
                     newsMutableLiveData.setValue(response.body());

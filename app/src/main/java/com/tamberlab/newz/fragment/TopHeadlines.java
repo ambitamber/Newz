@@ -88,7 +88,7 @@ public class TopHeadlines extends Fragment{
     private void getData() {
         if (NetworkCheck.isUp(getContext())){
             TopViewModel topViewModel = new ViewModelProvider(requireActivity()).get(TopViewModel.class);
-            topViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            topViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

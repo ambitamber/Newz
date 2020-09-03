@@ -1,5 +1,7 @@
 package com.tamberlab.newz.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,12 +18,12 @@ import retrofit2.Response;
 public class TopViewModel extends ViewModel {
     private MutableLiveData<News> newsMutableLiveData;
 
-    public LiveData<News> getNews() {
+    public LiveData<News> getNews(Context context) {
 
         if (newsMutableLiveData == null){
             newsMutableLiveData = new MutableLiveData<>();
             ApiService apiService = APIClient.getRetrofit().create(ApiService.class);
-            Call<News> call = apiService.getheadlines("us", Constants.API_KEY);
+            Call<News> call = apiService.getheadlines(getCountryName(context), Constants.API_KEY);
             call.enqueue(new Callback<News>() {
                 @Override
                 public void onResponse(Call<News> call, Response<News> response) {
@@ -35,5 +37,10 @@ public class TopViewModel extends ViewModel {
             });
         }
         return newsMutableLiveData;
+    }
+
+    private static String getCountryName(Context context){
+        String countryName = context.getResources().getConfiguration().locale.getCountry();
+        return  countryName;
     }
 }

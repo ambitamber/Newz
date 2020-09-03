@@ -85,7 +85,7 @@ public class TopTechnology extends Fragment {
     private void getDate(){
         if (NetworkCheck.isUp(getContext())){
             TechnologyViewModel technologyViewModel = new ViewModelProvider(requireActivity()).get(TechnologyViewModel.class);
-            technologyViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<News>() {
+            technologyViewModel.getNews(getContext()).observe(getViewLifecycleOwner(), new Observer<News>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(News news) {

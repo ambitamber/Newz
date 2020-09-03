@@ -1,5 +1,9 @@
 package com.tamberlab.newz.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.tamberlab.newz.R;
 import com.tamberlab.newz.model.News;
 
 import okhttp3.OkHttpClient;
@@ -11,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
 
     private static Retrofit retrofit;
+    Context context;
 
     public static Retrofit getRetrofit(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -26,15 +31,26 @@ public class APIClient {
         return retrofit;
     }
 
-    public static Call getHeadlineCall(String category) {
+    public static Call getHeadlineCall(String category, Context context) {
         ApiService apiService = getRetrofit().create(ApiService.class);
-        Call<News> call = apiService.getheadlinesCat("us",category,Constants.API_KEY);
+        Call<News> call = apiService.getheadlinesCat(getCountryName(context),category,Constants.API_KEY);
         return call;
     }
 
-    public static Call getEverythingCall(String sortBy, int pageSize,String query){
+    public static Call getEverythingCall(String sortBy, int pageSize,String query,Context context){
         ApiService apiService = getRetrofit().create(ApiService.class);
-        Call<News> call = apiService.geteverything(sortBy,pageSize,"en",query,Constants.API_KEY);
+        Call<News> call = apiService.geteverything(sortBy,pageSize,getLanguage(context),query,Constants.API_KEY);
         return call;
     }
+
+    private static String getCountryName(Context context){
+        String countryName = context.getResources().getConfiguration().locale.getCountry();
+        return  countryName;
+    }
+
+    private static String getLanguage(Context context){
+        String countryName = context.getResources().getConfiguration().locale.getLanguage();
+        return countryName;
+    }
+
 }
