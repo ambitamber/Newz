@@ -32,8 +32,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="19sp"
-                            android:layout_marginLeft="5dp"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
                     </LinearLayout>
 
                 </androidx.appcompat.widget.Toolbar>
@@ -49,8 +50,7 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@android:color/white"
+        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         app:menu="@menu/nav_bar" />

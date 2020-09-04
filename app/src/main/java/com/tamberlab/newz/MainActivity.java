@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tamberlab.newz.fragment.HomeFragment;
 import com.tamberlab.newz.fragment.MoreFragment;
 import com.tamberlab.newz.localfragments.LocalFragment;
+import com.tamberlab.newz.utils.FireStoreLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     MoreFragment moreFragment = new MoreFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = homeFragment;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                         toolbar_text.setText("Newz");
                         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        menu.findItem(R.id.app_bar_search).setVisible(true);
                         return true;
                     case R.id.navigation_local:
                         fm.beginTransaction().hide(active).show(localFragment).commit();
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                         toolbar_text.setText("Local");
                         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        menu.findItem(R.id.app_bar_search).setVisible(true);
                         return true;
                     case R.id.navigation_more:
                         fm.beginTransaction().hide(active).show(moreFragment).commit();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                         toolbar_text.setText("Setting");
                         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL);
+                        menu.findItem(R.id.app_bar_search).setVisible(false);
                         return true;
                 }
                 return false;
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             active = homeFragment;
             bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
             toolbar_text.setText("Newz");
+            menu.findItem(R.id.app_bar_search).setVisible(true);
         }else if (active == localFragment){
             if (isActive){
                 getSupportFragmentManager().popBackStack();
@@ -108,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 active = homeFragment;
                 bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
                 toolbar_text.setText("Newz");
+                menu.findItem(R.id.app_bar_search).setVisible(true);
             }
         }
     }
@@ -115,13 +122,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu,menu);
+        this.menu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.app_bar_search){
-            startActivity(new Intent(MainActivity.this, SearchNewz.class));
+            startActivity(new Intent(MainActivity.this, SearchActivty.class));
             overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
         }
         return super.onOptionsItemSelected(item);

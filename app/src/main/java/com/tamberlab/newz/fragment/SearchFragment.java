@@ -57,8 +57,7 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-    @BindView(R.id.search_ErrorTV)
-    TextView errorTV;
+
     @BindView(R.id.search_Progressbar)
     ProgressBar progressBar;
     @BindView(R.id.search_Recyclerview)
@@ -91,7 +90,7 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmentsearch, container, false);
+        View view = inflater.inflate(R.layout.activity_search, container, false);
 
         ButterKnife.bind(this,view);
 
@@ -164,7 +163,6 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
 
     private void showData(){
         progressBar.setVisibility(View.INVISIBLE);
-        errorTV.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         searchResults.setVisibility(View.VISIBLE);
         dataAvailable = true;
@@ -172,8 +170,6 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
 
     private void showError(String error){
         progressBar.setVisibility(View.INVISIBLE);
-        errorTV.setVisibility(View.VISIBLE);
-        errorTV.setText(error);
         recyclerView.setVisibility(View.INVISIBLE);
         searchResults.setVisibility(View.INVISIBLE);
     }
