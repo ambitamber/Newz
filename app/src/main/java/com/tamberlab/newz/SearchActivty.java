@@ -1,15 +1,30 @@
 package com.tamberlab.newz;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -17,7 +32,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.tamberlab.newz.adapter.RecyclerViewAdapter;
+import com.tamberlab.newz.model.Articles;
+import com.tamberlab.newz.model.News;
+import com.tamberlab.newz.utils.Constants;
+import com.tamberlab.newz.utils.NetworkCheck;
+import com.tamberlab.newz.utils.ScreenSize;
+import com.tamberlab.newz.utils.ServiceGenerator;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,18 +49,25 @@ import java.util.List;
 import br.com.mauker.materialsearchview.MaterialSearchView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class SearchActivty extends AppCompatActivity {
+public class SearchActivty extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.toolbar) Toolbar search_toolbar;
     @BindView(R.id.searchView) MaterialSearchView searchView;
+    @BindView(R.id.search_RecyclerView) RecyclerView search_RecyclerView;
+    @BindView(R.id.no_Internt) ConstraintLayout no_internet;
+    @BindView(R.id.search_bt) ConstraintLayout search_bt;
+    @BindView(R.id.search_Word) TextView search_Word;
 
-
-    private FirebaseFirestore database;
     String mQuery = null;
     GridLayoutManager gridLayoutManager;
     RecyclerViewAdapter recyclerViewAdapter;
-
+    private ArrayList<Articles> articlesArrayList;
+    private ServiceGenerator serviceGenerator = ServiceGenerator.getInstance();
+    News news;
     boolean dataAvailable = false;
 
 
@@ -59,8 +88,85 @@ public class SearchActivty extends AppCompatActivity {
                 addSuggestions();
             }
         }, 300);
-        searchViewText();
+        initSearchView();
+        search_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.openSearch();
+            }
+        });
+    }
 
+    private void createView(ArrayList<Articles> articles){
+        gridLayoutManager = new GridLayoutManager(this, ScreenSize.Size(this));
+        recyclerViewAdapter = new RecyclerViewAdapter(articles,this);
+        search_RecyclerView.setAdapter(recyclerViewAdapter);
+        search_RecyclerView.setLayoutManager(gridLayoutManager);
+        search_RecyclerView.setHasFixedSize(true);
+        search_RecyclerView.setItemViewCacheSize(20);
+        search_RecyclerView.setDrawingCacheEnabled(true);
+        onClicked(articles);
+    }
+
+    private void onClicked(ArrayList<Articles> articles){
+        recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnClickListenerHandler() {
+            @Override
+            public void onClick(int index) {
+                WebViewer.articles = articles.get(index);
+                startActivity(new Intent(SearchActivty.this, WebViewer.class));
+            }
+
+            @Override
+            public void shareButtonClick(int index) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                intent.putExtra(Intent.EXTRA_SUBJECT,articles.get(index).getTitle());
+                intent.putExtra(Intent.EXTRA_TEXT,  articles.get(index).getUrl());
+                startActivity( Intent.createChooser(intent, "Share link"));
+            }
+        });
+    }
+
+    private void getData(final String query,String sortBy, int pageSize,String language) {
+        hideKeyboard();
+        searchView.closeSearch();
+        if (NetworkCheck.isUp(this)) {
+            ServiceGenerator.context = this;
+            ServiceGenerator.getApi().geteverything(sortBy, pageSize,language, query, Constants.API_KEY)
+                    .enqueue(new Callback<News>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onResponse(@NotNull Call<News> call, @NotNull Response<News> response) {
+                            news = response.body();
+                            articlesArrayList = new ArrayList<>();
+                            articlesArrayList = news.getArticles();
+                            articlesArrayList.removeIf(articles -> articles.getAuthor() == null
+                                    || articles.getAuthor().contains(".com")
+                                    || articles.getAuthor().contains(", ")
+                                    || articles.getAuthor().contains("]")
+                                    || articles.getSourceItem().getName().contains("Google News"));
+                            createView(articlesArrayList);
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<News> call, @NotNull Throwable t) {
+                        }
+                    });
+        }else {
+        }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
+        }
+        assert imm != null;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -71,18 +177,21 @@ public class SearchActivty extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_search){
-            searchView.openSearch();
-        }
+
         return true;
     }
 
-    private void searchViewText(){
+    private void initSearchView(){
+        if (mQuery != null){
+            setupSharedPreferences(mQuery);
+            return;
+        }
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mQuery = query;
-                Log.i("SearchActivty",mQuery);
+                search_Word.setText(mQuery);
+                setupSharedPreferences(mQuery);
                 return true;
             }
 
@@ -91,6 +200,21 @@ public class SearchActivty extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setupSharedPreferences(final String query) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortBy = sharedPreferences.getString(
+                getString(R.string.settings_sort_by_key),
+                getString(R.string.settings_sort_by_publishedAt_value));
+        String language = sharedPreferences.getString(
+                getString(R.string.settings_language_key),
+                getString(R.string.settings_language_en_value));
+        String resultSize = sharedPreferences.getString(
+                getString(R.string.settings_min_result_key),
+                getString(R.string.settings_min_result_default));
+        getData(query,sortBy,Integer.parseInt(resultSize),language);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -103,7 +227,7 @@ public class SearchActivty extends AppCompatActivity {
     }
 
     public void addSuggestions(){
-        database = FirebaseFirestore.getInstance();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
         String countryName = getResources().getConfiguration().locale.getCountry();
         DocumentReference docRef = database.collection("Google Trend Data").document(countryName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -129,4 +253,21 @@ public class SearchActivty extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.settings_sort_by_key)) || key.equals(getString(R.string.settings_language_key)) || key.equals(getString(R.string.settings_min_result_key))){
+            initSearchView();
+        }
+    }
+
+    private void showData(){
+        search_RecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void showError(){
+        search_RecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+
 }
