@@ -187,7 +187,12 @@ public class WebViewer extends AppCompatActivity {
                 startActivity(new Intent(WebViewer.this, About.class));
                 break;
             case R.id.savedArticles_BT:
-                startActivity(new Intent(WebViewer.this, PersonInfo.class));
+                if (isSignedIn()){
+                    startActivity(new Intent(WebViewer.this, PersonInfo.class));
+                }else{
+                    startActivity(new Intent(WebViewer.this,LoginActivity.class));
+                }
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
         }
         return true;
@@ -206,7 +211,7 @@ public class WebViewer extends AppCompatActivity {
     }
 
     private void saveItem() {
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (isSignedIn()) {
             if (isSaved){
                 databaseReference.child(userID).child("article").child(articles.getAuthor() + " " + articles.getPublishedAt()).removeValue()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -236,6 +241,7 @@ public class WebViewer extends AppCompatActivity {
             }
         }else {
             startActivity(new Intent(WebViewer.this, LoginActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
     }
 
@@ -265,5 +271,9 @@ public class WebViewer extends AppCompatActivity {
         }else {
             showError();
         }
+    }
+
+    private boolean isSignedIn(){
+        return firebaseAuth.getCurrentUser() != null;
     }
 }

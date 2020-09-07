@@ -67,7 +67,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"
     //materialsearchview
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.3.0-rc01'
     //preference
     implementation "androidx.preference:preference:1.1.1"
     //Event Bus to send data to Widget

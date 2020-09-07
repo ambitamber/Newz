@@ -17,7 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tamberlab.newz.fragment.HomeFragment;
 import com.tamberlab.newz.fragment.MoreFragment;
 import com.tamberlab.newz.localfragments.LocalFragment;
-import com.tamberlab.newz.utils.FireStoreLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
         this.menu = menu;
         return true;
     }

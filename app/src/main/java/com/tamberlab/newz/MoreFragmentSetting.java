@@ -111,6 +111,7 @@ public class MoreFragmentSetting extends PreferenceFragmentCompat  implements Sh
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(getContext(), PersonInfo.class));
+                    getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                     return true;
                 }
             });
@@ -121,6 +122,7 @@ public class MoreFragmentSetting extends PreferenceFragmentCompat  implements Sh
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(getContext(), LoginActivity.class));
+                    getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                     return true;
                 }
             });

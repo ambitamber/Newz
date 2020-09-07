@@ -17,15 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,13 +32,10 @@ import com.tamberlab.newz.WebViewer;
 import com.tamberlab.newz.adapter.RecyclerViewAdapter;
 import com.tamberlab.newz.model.Articles;
 import com.tamberlab.newz.model.News;
-import com.tamberlab.newz.prefrences.PreferencesSetting;
 import com.tamberlab.newz.utils.Constants;
 import com.tamberlab.newz.utils.NetworkCheck;
 import com.tamberlab.newz.utils.ScreenSize;
 import com.tamberlab.newz.utils.ServiceGenerator;
-import com.google.android.material.appbar.AppBarLayout;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -58,11 +52,11 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
     public static final String TAG = SearchFragment.class.getSimpleName();
 
 
-    @BindView(R.id.search_Progressbar)
+
     ProgressBar progressBar;
-    @BindView(R.id.search_Recyclerview)
+
     RecyclerView recyclerView;
-    @BindView(R.id.search_results)
+
     TextView searchResults;
 
     GridLayoutManager gridLayoutManager;
@@ -184,7 +178,7 @@ public class SearchFragment extends Fragment implements SharedPreferences.OnShar
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.search_menu,menu);
+        inflater.inflate(R.menu.main_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.app_bar_search);
     }
 
