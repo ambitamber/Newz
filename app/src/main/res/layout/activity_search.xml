@@ -20,7 +20,7 @@
             android:id="@+id/search_bt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_background_black_white"
+            android:background="@drawable/custom_background_black_white_rounded"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp">
 
@@ -30,7 +30,7 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="TextView"
+                android:text="@string/search_hint"
                 android:textColor="@color/black"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -12,14 +12,15 @@
         android:name=".widget.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/icon_app_logo"
+        android:icon="@drawable/icon_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icon_app_logo"
+        android:roundIcon="@drawable/icon_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".SearchActivty">
+        <activity android:name=".SearchActivty"
+            android:launchMode="singleTop">
 
         </activity>
         <activity

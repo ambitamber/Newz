@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 import com.tamberlab.newz.adapter.RecyclerViewAdapter;
 import com.tamberlab.newz.model.Articles;
 import com.tamberlab.newz.model.News;
+import com.tamberlab.newz.prefrences.PreferencesSetting;
 import com.tamberlab.newz.utils.Constants;
 import com.tamberlab.newz.utils.NetworkCheck;
 import com.tamberlab.newz.utils.ScreenSize;
@@ -93,6 +94,17 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
             @Override
             public void onClick(View v) {
                 searchView.openSearch();
+                if (mQuery != null){
+                    searchView.setHint(mQuery);
+                }
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        search_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.fade_in,R.anim.slide_out_down);
             }
         });
     }
@@ -105,10 +117,6 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
         search_RecyclerView.setHasFixedSize(true);
         search_RecyclerView.setItemViewCacheSize(20);
         search_RecyclerView.setDrawingCacheEnabled(true);
-        onClicked(articles);
-    }
-
-    private void onClicked(ArrayList<Articles> articles){
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnClickListenerHandler() {
             @Override
             public void onClick(int index) {
@@ -129,12 +137,13 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
         });
     }
 
+
     private void getData(final String query,String sortBy, int pageSize,String language) {
         hideKeyboard();
         searchView.closeSearch();
         if (NetworkCheck.isUp(this)) {
-            ServiceGenerator.context = this;
-            ServiceGenerator.getApi().geteverything(sortBy, pageSize,language, query, Constants.API_KEY)
+            serviceGenerator.context = this;
+            serviceGenerator.getApi().geteverything(sortBy, pageSize,language, query, Constants.API_KEY)
                     .enqueue(new Callback<News>() {
                         @RequiresApi(api = Build.VERSION_CODES.N)
                         @SuppressLint("SetTextI18n")
@@ -143,11 +152,13 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
                             news = response.body();
                             articlesArrayList = new ArrayList<>();
                             articlesArrayList = news.getArticles();
-                            articlesArrayList.removeIf(articles -> articles.getAuthor() == null
-                                    || articles.getAuthor().contains(".com")
-                                    || articles.getAuthor().contains(", ")
-                                    || articles.getAuthor().contains("]")
-                                    || articles.getSourceItem().getName().contains("Google News"));
+                            articlesArrayList.removeIf(articles -> articles.getAuthor() == null);
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace(".","-")));
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("]","-")));
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("[","-")));
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("$","-")));
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("#","-")));
+                            articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("/","-")));
                             createView(articlesArrayList);
                         }
 
@@ -177,7 +188,10 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.filter){
+            startActivity(new Intent(this, PreferencesSetting.class));
 
+        }
         return true;
     }
 
@@ -223,6 +237,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
             searchView.closeSearch();
         }else{
             super.onBackPressed();
+            overridePendingTransition(R.anim.fade_in,R.anim.slide_out_down);
         }
     }
 
@@ -248,6 +263,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
                     e.printStackTrace();
                 }
                 if(searchView != null){
+                    assert wordsList != null;
                     searchView.addSuggestions(wordsList);
                 }
             }
@@ -261,6 +277,12 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+    }
+
     private void showData(){
         search_RecyclerView.setVisibility(View.VISIBLE);
     }
@@ -268,6 +290,4 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     private void showError(){
         search_RecyclerView.setVisibility(View.INVISIBLE);
     }
-
-
 }

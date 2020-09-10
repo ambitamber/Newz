@@ -129,9 +129,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.app_bar_search){
             startActivity(new Intent(MainActivity.this, SearchActivty.class));
-            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+            overridePendingTransition( R.anim.slide_in_up, R.anim.fade_out );
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

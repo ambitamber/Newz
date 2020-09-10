@@ -89,11 +89,13 @@ public class TopSports extends Fragment {
                 @Override
                 public void onChanged(News news) {
                     articlesArrayList = news.getArticles();
-                    articlesArrayList.removeIf(articles -> articles.getAuthor()== null
-                            || articles.getAuthor().contains(".com")
-                            || articles.getAuthor().contains(", ")
-                            || articles.getAuthor().contains("]")
-                            || articles.getSourceItem().getName().contains("Google News"));
+                    articlesArrayList.removeIf(articles -> articles.getAuthor() == null);
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace(".","-")));
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("]","-")));
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("[","-")));
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("$","-")));
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("#","-")));
+                    articlesArrayList.forEach(articles -> articles.setAuthor(articles.getAuthor().replace("/","-")));
                     createView(articlesArrayList);
                     recyclerViewAdapter.notifyDataSetChanged();
                     showData();

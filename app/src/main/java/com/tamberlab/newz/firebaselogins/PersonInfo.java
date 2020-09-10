@@ -74,7 +74,13 @@ public class PersonInfo extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right);
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
         userId = firebaseAuth.getCurrentUser().getUid();
@@ -84,7 +90,7 @@ public class PersonInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(PersonInfo.this);
-                builder.setMessage("Do you want to sign out?");
+                builder.setMessage("Would you like to sign out?");
                 builder.setTitle("Sign out?");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -107,9 +113,7 @@ public class PersonInfo extends AppCompatActivity {
         hide_show();
     }
     private void getData(){
-        options = new FirebaseRecyclerOptions.Builder<Articles>()
-                .setQuery(databaseReference.child("article"),Articles.class)
-                .build();
+        options = new FirebaseRecyclerOptions.Builder<Articles>().setQuery(databaseReference.child("article"),Articles.class).build();
 
         adapter = new FirebaseRecyclerAdapter<Articles,ListAdapterHolder>(options){
             @NonNull

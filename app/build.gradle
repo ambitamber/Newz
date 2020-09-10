@@ -18,7 +18,7 @@ android {
         applicationId "com.tamberlab.newz"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
+        versionCode 3
         versionName "1.2"
         multiDexEnabled true
 
