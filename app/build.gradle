@@ -83,5 +83,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.6.0'
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:6.3.0'
-    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.google.android.gms:play-services-ads:19.4.0'
 }

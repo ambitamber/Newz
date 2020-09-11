@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ import com.bumptech.glide.request.target.Target;
 import com.tamberlab.newz.R;
 import com.tamberlab.newz.model.Articles;
 import com.tamberlab.newz.model.SourceItem;
-import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -48,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
     }
 
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder        {
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.thumbnail_IV)
         ImageView thumbnail;
@@ -61,17 +61,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.source_TV)
         TextView source;
         @BindView(R.id.share_IV)
-        Button share_IV;
+        ImageButton share_IV;
         @BindView(R.id.progressBar_image)
         ProgressBar progressBar_image;
-
 
         public RecyclerViewHolder(@NonNull View itemView,final OnClickListenerHandler listenerHandler) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            cardView.setPreventCornerOverlap(false);
-            cardView.setCardElevation(10);
-            cardView.setRadius(10);
+            thumbnail.setMaxHeight(600);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,17 +80,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     }
                 }
             });
-        share_IV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listenerHandler != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
+            share_IV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listenerHandler != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
                         listenerHandler.shareButtonClick(position);
+                        }
                     }
                 }
-            }
-        });
+            });
         }
     }
 
@@ -111,14 +108,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         holder.title.setText(articlesList.get(position).getTitle());
         holder.publishedat.setText(dateTime(articlesList.get(position).getPublishedAt()));
-        //holder.description.setText(articlesList.get(position).getDescription());
 
         SourceItem sourceItem = articlesList.get(position).getSourceItem();
         holder.source.setText(sourceItem.getName());
 
         String imageurl = articlesList.get(position).getUrlToImage();
         Glide.with(context).load(imageurl)
-                .apply(new RequestOptions().error(R.drawable.error_image).centerCrop())
+                .apply(new RequestOptions())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
