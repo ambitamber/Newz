@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     @BindView(R.id.no_Internt) ConstraintLayout no_internet;
     @BindView(R.id.search_bt) ConstraintLayout search_bt;
     @BindView(R.id.search_Word) TextView search_Word;
+    @BindView(R.id.search_progressBar) ProgressBar progressBar;
 
     String mQuery = null;
     GridLayoutManager gridLayoutManager;
@@ -137,10 +139,10 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
         });
     }
 
-
     private void getData(final String query,String sortBy, int pageSize,String language) {
         hideKeyboard();
         searchView.closeSearch();
+        progressBar.setVisibility(View.VISIBLE);
         if (NetworkCheck.isUp(this)) {
             serviceGenerator.context = this;
             serviceGenerator.getApi().geteverything(sortBy, pageSize,language, query, Constants.API_KEY)
@@ -166,7 +168,9 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
                         public void onFailure(@NotNull Call<News> call, @NotNull Throwable t) {
                         }
                     });
+            showData();
         }else {
+            showError();
         }
     }
 
@@ -190,7 +194,6 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.filter){
             startActivity(new Intent(this, PreferencesSetting.class));
-
         }
         return true;
     }
@@ -198,6 +201,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     private void initSearchView(){
         if (mQuery != null){
             setupSharedPreferences(mQuery);
+            search_Word.setText(mQuery);
             return;
         }
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -242,32 +246,34 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     }
 
     public void addSuggestions(){
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        String countryName = getResources().getConfiguration().locale.getCountry();
-        DocumentReference docRef = database.collection("Google Trend Data").document(countryName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Object objectData = documentSnapshot.getData();
-                String jsonData = new Gson().toJson(objectData);
-                List<String> wordsList = null;
-                try {
-                    JSONObject jsonObject = new JSONObject(jsonData);
-                    wordsList = new ArrayList<>();
-                    for (int i = 0; i < jsonObject.length(); i++){
-                        JSONObject eachItem = jsonObject.getJSONObject(String.valueOf(i));
-                        String eachWord = eachItem.getString("word");
-                        wordsList.add(eachWord);
+        if (NetworkCheck.isUp(this)){
+            FirebaseFirestore database = FirebaseFirestore.getInstance();
+            String countryName = getResources().getConfiguration().locale.getCountry();
+            DocumentReference docRef = database.collection("Google Trend Data").document(countryName);
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    Object objectData = documentSnapshot.getData();
+                    String jsonData = new Gson().toJson(objectData);
+                    List<String> wordsList = null;
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        wordsList = new ArrayList<>();
+                        for (int i = 0; i < jsonObject.length(); i++){
+                            JSONObject eachItem = jsonObject.getJSONObject(String.valueOf(i));
+                            String eachWord = eachItem.getString("word");
+                            wordsList.add(eachWord);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    if(searchView != null){
+                        assert wordsList != null;
+                        searchView.addSuggestions(wordsList);
+                    }
                 }
-                if(searchView != null){
-                    assert wordsList != null;
-                    searchView.addSuggestions(wordsList);
-                }
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -285,9 +291,14 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
 
     private void showData(){
         search_RecyclerView.setVisibility(View.VISIBLE);
+        no_internet.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        dataAvailable = true;
     }
 
     private void showError(){
         search_RecyclerView.setVisibility(View.INVISIBLE);
+        no_internet.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

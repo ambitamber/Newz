@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.tamberlab.newz.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,10 +41,12 @@ public class LoginActivity extends AppCompatActivity {
     FrameLayout login_container;
     @BindView(R.id.container)
     FrameLayout signup_container;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private FirebaseAuth firebaseAuth;
     FragmentManager fragmentManager;
-
+    boolean isOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,17 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right);
+            }
+        });
 
         personSignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,13 +109,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                     fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().add(R.id.container,new Signup()).commit();
+                    isOpened = true;
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        if (isOpened){
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment signUpfragment = fragmentManager.findFragmentById(R.id.container);
+            assert signUpfragment != null;
+            fragmentTransaction.hide(signUpfragment).commit();
+            isOpened = false;
+        }else{
+            super.onBackPressed();
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right);
+        }
     }
 }

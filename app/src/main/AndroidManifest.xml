@@ -29,7 +29,9 @@
         <activity
             android:name=".prefrences.PreferencesSetting"
             android:label="Filters" />
-        <activity android:name=".firebaselogins.LoginActivity" />
+        <activity
+            android:name=".firebaselogins.LoginActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
