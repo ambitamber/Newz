@@ -62,7 +62,8 @@
                 android:id="@+id/error_Login"
                 android:textColor="#FF0000"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
             <Button
                 android:id="@+id/personSignin"
                 android:layout_width="fill_parent"

@@ -1,12 +1,16 @@
 package com.tamberlab.newz.firebaselogins;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     FrameLayout signup_container;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.error_Login)
+    TextView error_Login;
 
     private FirebaseAuth firebaseAuth;
     FragmentManager fragmentManager;
@@ -72,31 +78,38 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = personEmail.getText().toString().trim();
                 String password = personPassword.getText().toString().trim();
-                
-                if (TextUtils.isEmpty(email)){
-                   personEmail.setError("Email is required!");
-                   return;
+
+                if (TextUtils.isEmpty(email)) {
+                    error_Login.setVisibility(View.INVISIBLE);
+                    personEmail.setError("Email is required!");
+                    return;
                 }
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
+                    error_Login.setVisibility(View.INVISIBLE);
                     personPassword.setError("Password is required.");
+                    return;
+                }
+                if (password.length() < 5){
+                    error_Login.setVisibility(View.VISIBLE);
+                    error_Login.setText("Password must be greater than 5 characters");
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
 
-                if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
-                    firebaseAuth.signInWithEmailAndPassword(email,password)
+                if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)) {
+                    firebaseAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    if (!task.isSuccessful()){
-                                        if (password.length() < 6) {
-                                            personPassword.setError("Password must be greater than six characters.");
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-                                        }
-                                    }else {
+                                    if (!task.isSuccessful()) {
+                                        error_Login.setVisibility(View.VISIBLE);
+                                        error_Login.setText("Incorrect Email or Password.");
+                                    } else {
                                         finish();
+                                        Toast.makeText(LoginActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(LoginActivity.this,PersonInfo.class));
                                     }
                                 }
                             });
@@ -107,22 +120,22 @@ public class LoginActivity extends AppCompatActivity {
         personSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().add(R.id.container,new Signup()).commit();
-                    isOpened = true;
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().add(R.id.container, new Signup()).commit();
+                isOpened = true;
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        if (isOpened){
+        if (isOpened) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment signUpfragment = fragmentManager.findFragmentById(R.id.container);
             assert signUpfragment != null;
             fragmentTransaction.hide(signUpfragment).commit();
             isOpened = false;
-        }else{
+        } else {
             super.onBackPressed();
             overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right);
         }
