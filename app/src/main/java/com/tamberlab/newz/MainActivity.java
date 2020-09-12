@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
             toolbar_text.setText("Newz");
             menu.findItem(R.id.app_bar_search).setVisible(true);
-        }else if (active == localFragment){
+        }else {
             if (isActive){
                 getSupportFragmentManager().popBackStack();
                 isActive = false;
