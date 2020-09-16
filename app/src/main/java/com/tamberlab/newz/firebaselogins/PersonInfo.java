@@ -16,9 +16,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tamberlab.newz.R;
 import com.tamberlab.newz.WebViewer;
 import com.tamberlab.newz.model.Articles;
@@ -57,12 +62,17 @@ public class PersonInfo extends AppCompatActivity {
     TextView name_tv;
     @BindView(R.id.chargePasswordcon)
     ConstraintLayout chagePassword;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout coordinator;
+    @BindView(R.id.close_BT)
+    FloatingActionButton close_BT;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    String userId;
+    FragmentManager fragmentManager;
     private FirebaseRecyclerAdapter<Articles,ListAdapterHolder> adapter;
     private FirebaseRecyclerOptions<Articles> options;
-    String userId;
     private boolean dataAvailable = false;
 
     @Override
@@ -111,6 +121,27 @@ public class PersonInfo extends AppCompatActivity {
             }
         });
         hide_show();
+        chagePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coordinator.setVisibility(View.INVISIBLE);
+                close_BT.setVisibility(View.VISIBLE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations( R.anim.slide_in_up,R.anim.fade_out);
+                transaction.replace(R.id.container,new ChargePassword()).commit();
+            }
+        });
+        close_BT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment chargePassword = getSupportFragmentManager().findFragmentById(R.id.container);
+                transaction.setCustomAnimations(R.anim.fade_in,R.anim.slide_out_down);
+                transaction.hide(chargePassword).commit();
+                coordinator.setVisibility(View.VISIBLE);
+                close_BT.setVisibility(View.INVISIBLE);
+            }
+        });
     }
     private void getData(){
         options = new FirebaseRecyclerOptions.Builder<Articles>().setQuery(databaseReference.child("article"),Articles.class).build();
@@ -154,18 +185,6 @@ public class PersonInfo extends AppCompatActivity {
         });
     }
 
-    public static class ListAdapterHolder extends RecyclerView.ViewHolder  {
-
-        @BindView(R.id.firebase_news_IV)
-        ImageView imageView;
-        @BindView(R.id.firebase_news_TV)
-        TextView textView;
-        public ListAdapterHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-        }
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -201,6 +220,7 @@ public class PersonInfo extends AppCompatActivity {
         nointernetLayout.setVisibility(View.INVISIBLE);
         dataAvailable = true;
     }
+
     private void showError(){
         recyclerView.setVisibility(View.INVISIBLE);
         nointernetLayout.setVisibility(View.VISIBLE);
@@ -229,5 +249,17 @@ public class PersonInfo extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right);
+    }
+
+    public static class ListAdapterHolder extends RecyclerView.ViewHolder  {
+
+        @BindView(R.id.firebase_news_IV)
+        ImageView imageView;
+        @BindView(R.id.firebase_news_TV)
+        TextView textView;
+        public ListAdapterHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+        }
     }
 }

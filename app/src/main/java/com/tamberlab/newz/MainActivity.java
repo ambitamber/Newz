@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         active = localFragment;
                         item.setChecked(true);
                         toolbar_text.setText("Local");
-                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL);
                         menu.findItem(R.id.app_bar_search).setVisible(true);
                         return true;
                     case R.id.navigation_more:
@@ -129,14 +129,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.app_bar_search){
             startActivity(new Intent(MainActivity.this, SearchActivty.class));
-            overridePendingTransition( R.anim.slide_in_up, R.anim.fade_out );
+            overridePendingTransition(R.anim.slide_in_up, R.anim.fade_out);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 }

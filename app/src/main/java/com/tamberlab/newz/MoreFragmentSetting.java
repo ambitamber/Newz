@@ -73,10 +73,10 @@ public class MoreFragmentSetting extends PreferenceFragmentCompat  implements Sh
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("message/rfc822");
+                emailIntent.setType("plain/text");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{"ambitamber@gmail.com"});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Newz App Feedback");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Your message.");
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                 return true;
             }

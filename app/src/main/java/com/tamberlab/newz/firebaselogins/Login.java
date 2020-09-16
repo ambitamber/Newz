@@ -50,7 +50,8 @@ public class Login extends Fragment {
     FirebaseAuth firebaseAuth;
     LoginActivity loginActivity;
     String TransitionName;
-    public Login(){
+
+    public Login() {
 
     }
 
@@ -58,7 +59,7 @@ public class Login extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         firebaseAuth = FirebaseAuth.getInstance();
         loginActivity = new LoginActivity();
@@ -79,9 +80,9 @@ public class Login extends Fragment {
                     passwordEditText.setError("Password is required.");
                     return;
                 }
-                if (password.length() < 5){
+                if (password.length() < 6) {
                     login_Error.setVisibility(View.VISIBLE);
-                    login_Error.setText("Password must be greater than 5 characters");
+                    login_Error.setText("Password must be 6 or more characters");
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -97,22 +98,41 @@ public class Login extends Fragment {
                                         login_Error.setText("Incorrect Email or Password.");
                                     } else {
                                         getActivity().finish();
-                                        startActivity(new Intent(getContext(),PersonInfo.class));
+                                        startActivity(new Intent(getContext(), PersonInfo.class));
                                     }
                                 }
                             });
                 }
             }
         });
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                String email = emailEditText.getText().toString().trim();
+                if (!TextUtils.isEmpty(email)) {
+                    firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Email sent", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+                } else {
+                    emailEditText.setError("Please enter your email.");
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         return view;
     }
 
-    private void openSignup(){
+    private void openSignup() {
         if (getArguments() != null) {
             final Bundle bundle = getArguments();
-            if (bundle != null) {
-                TransitionName = bundle.getString("TRANS_NAME");
-            }
+            TransitionName = bundle.getString("TRANS_NAME");
 
             //set transition
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -123,28 +143,18 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
                 Signup signup = new Signup();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     floatingActionButton.setTransitionName("trans_clear");
-                    setSharedElementReturnTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.change_image_trans));
-                    setExitTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.fade));
-
-                    signup.setSharedElementEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.change_image_trans));
-                    signup.setEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.fade));
-
+                    setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_trans));
+                    setExitTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
+                    signup.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_trans));
+                    signup.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
                     TransitionName = floatingActionButton.getTransitionName();
-
                     Bundle bundle = new Bundle();
                     bundle.putString("TRANS_NAME", TransitionName);
                     signup.setArguments(bundle);
                     FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, signup)
-                            .addSharedElement(floatingActionButton, TransitionName)
-                            .commit();
+                    fragmentManager.beginTransaction().replace(R.id.container, signup).addSharedElement(floatingActionButton, TransitionName).commit();
                 }
             }
         });

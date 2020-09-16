@@ -72,7 +72,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     private ServiceGenerator serviceGenerator = ServiceGenerator.getInstance();
     News news;
     boolean dataAvailable = false;
-
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +221,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     }
 
     private void setupSharedPreferences(final String query) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String sortBy = sharedPreferences.getString(
                 getString(R.string.settings_sort_by_key),
                 getString(R.string.settings_sort_by_publishedAt_value));
@@ -286,7 +286,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void showData(){

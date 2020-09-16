@@ -18,11 +18,12 @@
             android:key="@string/settings_language_key"
             android:title="@string/settings_language_label"/>
 
-        <EditTextPreference
+        <ListPreference
+            android:entries="@array/setting_min_results_labels"
+            android:entryValues="@array/setting_min_results_key"
             android:defaultValue="@string/settings_min_result_default"
             android:inputType="numberDecimal"
             android:key="@string/settings_min_result_key"
-            android:selectAllOnFocus="true"
             android:title="@string/settings_min_result_label" />
     </PreferenceCategory>
 

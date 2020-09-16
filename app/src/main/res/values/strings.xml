@@ -36,10 +36,25 @@
     <string name="settings_sort_by_publishedAt_label">Published At</string>
     <string name="settings_sort_by_publishedAt_value" translatable="false">publishedAt</string>
 
-    <!-- Strings For Minimum Magnitude Preference [CHAR LIMIT=30] -->
+    <!-- Strings For Minimum result Preference [CHAR LIMIT=30] -->
     <string name="settings_min_result_label">Results Size</string>
     <string name="settings_min_result_key" translatable="false">min_result</string>
-    <string name="settings_min_result_default" translatable="false">20</string>
+    <string name="settings_min_result_default" translatable="false">@string/settings_min_result_twenty_key</string>
+    <!-- Label for Minimum result 20 option [CHAR LIMIT=20] -->
+    <string name="settings_min_result_twenty_label">20</string>
+    <string name="settings_min_result_twenty_key" translatable="false">20</string>
+    <!-- Label for Minimum result 40 option [CHAR LIMIT=20] -->
+    <string name="settings_min_result_forty_label">40</string>
+    <string name="settings_min_result_forty_key" translatable="false">40</string>
+    <!-- Label for Minimum result 60 option [CHAR LIMIT=20] -->
+    <string name="settings_min_result_sixty_label">60</string>
+    <string name="settings_min_result_sixty_key" translatable="false">60</string>
+    <!-- Label for Minimum result 80 option [CHAR LIMIT=20] -->
+    <string name="settings_min_result_eighty_label">80</string>
+    <string name="settings_min_result_eighty_key" translatable="false">80</string>
+    <!-- Label for Minimum result 100 option [CHAR LIMIT=20] -->
+    <string name="settings_min_result_hundred_label">100</string>
+    <string name="settings_min_result_hundred_key" translatable="false">100</string>
 
     <!-- Strings For language [CHAR LIMIT=30] -->
     <string name="settings_language_label">Language</string>

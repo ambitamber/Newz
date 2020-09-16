@@ -102,13 +102,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     app:layout_collapseMode="pin"
-
                     app:theme="@style/ToolbarColoredBackArrow">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="60dp">
+                        android:layout_marginRight="60dp"
+                        android:layout_marginEnd="60dp">
 
                         <TextView
                             android:id="@+id/userEmail"
@@ -167,4 +167,18 @@
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/close_BT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_clear_24"
+        android:visibility="invisible"
+        android:layout_marginStart="20dp" />
 </RelativeLayout>
