@@ -50,6 +50,7 @@ public class Login extends Fragment {
     FirebaseAuth firebaseAuth;
     LoginActivity loginActivity;
     String TransitionName;
+    public static final String TRANSITION_NAME = "TRANS_NAME";
 
     public Login() {
 
@@ -132,7 +133,7 @@ public class Login extends Fragment {
     private void openSignup() {
         if (getArguments() != null) {
             final Bundle bundle = getArguments();
-            TransitionName = bundle.getString("TRANS_NAME");
+            TransitionName = bundle.getString(TRANSITION_NAME);
 
             //set transition
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -151,7 +152,7 @@ public class Login extends Fragment {
                     signup.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
                     TransitionName = floatingActionButton.getTransitionName();
                     Bundle bundle = new Bundle();
-                    bundle.putString("TRANS_NAME", TransitionName);
+                    bundle.putString(TRANSITION_NAME, TransitionName);
                     signup.setArguments(bundle);
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.container, signup).addSharedElement(floatingActionButton, TransitionName).commit();

@@ -31,6 +31,8 @@ import com.tamberlab.newz.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.tamberlab.newz.firebaselogins.Login.TRANSITION_NAME;
+
 public class Signup extends Fragment {
 
     @BindView(R.id.email)
@@ -136,7 +138,7 @@ public class Signup extends Fragment {
     private void setUpLogin() {
         final Bundle bundle = getArguments();
         if (bundle != null) {
-            transitionName = bundle.getString("TRANS_NAME");
+            transitionName = bundle.getString(TRANSITION_NAME);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             close_BT.setTransitionName(transitionName);
@@ -151,7 +153,7 @@ public class Signup extends Fragment {
                     loginFragment.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_trans));
                     loginFragment.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
                     Bundle bundle = new Bundle();
-                    bundle.putString("TRANS_NAME", transitionName);
+                    bundle.putString(TRANSITION_NAME, transitionName);
                     loginFragment.setArguments(bundle);
                     fragmentManager.beginTransaction().replace(R.id.container, loginFragment).addSharedElement(close_BT, transitionName).commit();
                 }
