@@ -1,6 +1,8 @@
 package com.tamberlab.newz;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -81,6 +84,7 @@ public class WebViewer extends AppCompatActivity {
     @BindView(R.id.adView)
     AdView adView;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,33 +131,22 @@ public class WebViewer extends AppCompatActivity {
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadWebViewer();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            loadWebViewer();
+            swipeRefreshLayout.setRefreshing(false);
         });
 
-        try_Again_BT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadWebViewer();
-            }
-        });
+        try_Again_BT.setOnClickListener(v -> loadWebViewer());
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                intent.putExtra(Intent.EXTRA_SUBJECT, articles.getTitle());
-                intent.putExtra(Intent.EXTRA_TEXT, articles.getUrl());
-                Intent shareIntent = Intent.createChooser(intent, getString(R.string.share_link));
-                startActivity(shareIntent);
-            }
+        floatingActionButton.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            intent.putExtra(Intent.EXTRA_SUBJECT, articles.getTitle());
+            intent.putExtra(Intent.EXTRA_TEXT, articles.getUrl());
+            Intent shareIntent = Intent.createChooser(intent, getString(R.string.share_link));
+            startActivity(shareIntent);
         });
 
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
@@ -194,6 +187,10 @@ public class WebViewer extends AppCompatActivity {
                 }
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
+            case R.id.open_browser:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articles.getUrl()));
+                startActivity(browserIntent);
+                break;
         }
         return true;
     }
@@ -214,30 +211,19 @@ public class WebViewer extends AppCompatActivity {
         if (isSignedIn()) {
             if (isSaved){
                 databaseReference.child(userID).child("article").child(articles.getAuthor() + " " + articles.getPublishedAt()).removeValue()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(WebViewer.this, "Article removed",Toast.LENGTH_SHORT).show();
-                                isSaved = false;
-                                menu.findItem(R.id.save_BT).setIcon(R.drawable.baseline_bookmark_border_white_24);
-                            }
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(WebViewer.this, "Article removed",Toast.LENGTH_SHORT).show();
+                            isSaved = false;
+                            menu.findItem(R.id.save_BT).setIcon(R.drawable.baseline_bookmark_border_white_24);
                         });
             }else{
                 databaseReference.child(userID).child("article").child(articles.getAuthor() + " " + articles.getPublishedAt()).setValue(articles)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(WebViewer.this, "Article saved",Toast.LENGTH_SHORT).show();
-                                isSaved = true;
-                                menu.findItem(R.id.save_BT).setIcon(R.drawable.ic_baseline_bookmark_24);
-                            }
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(WebViewer.this, "Article saved",Toast.LENGTH_SHORT).show();
+                            isSaved = true;
+                            menu.findItem(R.id.save_BT).setIcon(R.drawable.ic_baseline_bookmark_24);
                         })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(WebViewer.this, "Article failed to save",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        .addOnFailureListener(e -> Toast.makeText(WebViewer.this, "Article failed to save",Toast.LENGTH_SHORT).show());
             }
         }else {
             startActivity(new Intent(WebViewer.this, LoginActivity.class));
@@ -245,9 +231,11 @@ public class WebViewer extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void loadWebViewer(){
         if (NetworkCheck.isUp(this)){
-            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.setWebViewClient(new MyBrowser());
             webView.setWebChromeClient(new WebChromeClient() {
                 @Override
                 public void onProgressChanged(WebView view, int newProgress) {
@@ -259,17 +247,25 @@ public class WebViewer extends AppCompatActivity {
                     }
                 }
             });
-
-            webView.setWebViewClient(new WebViewClient() {
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return false;
-                }
-            });
+            webView.getSettings().setLoadsImagesAutomatically(true);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setAllowFileAccess(true);
+            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
             webView.loadUrl(articles.getUrl());
             showData();
         }else {
             showError();
+        }
+    }
+    private static class MyBrowser extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+            view.loadUrl(url);
+            return true;
         }
     }
 

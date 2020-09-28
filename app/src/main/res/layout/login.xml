@@ -36,9 +36,10 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
-                        android:text="Login"
+                        android:text="@string/sign_in"
                         android:textColor="@android:color/white"
-                        android:textSize="35sp" />
+                        android:textSize="35sp"
+                        android:layout_marginStart="16dp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -50,7 +51,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="UselessParent">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/emaillayout"
@@ -65,15 +67,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
-                                android:hint="Email"
-                                android:singleLine="true" />
+                                android:hint="@string/email"
+                                android:singleLine="true"
+                                android:autofillHints="@string/email"
+                                android:inputType="textEmailAddress" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/passwordlayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/emaillayout"
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="16dp"
@@ -84,9 +87,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
-                                android:hint="Password"
+                                android:hint="@string/password"
                                 android:inputType="textPassword"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:autofillHints="@string/password" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </RelativeLayout>
@@ -107,7 +111,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="16dp"
                     android:background="@color/colorPrimary"
-                    android:text="Sign In"
+                    android:text="@string/sign_in"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
@@ -121,7 +125,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
                         android:background="@android:color/white"
-                        android:text="Forgot your Password ?" />
+                        android:text="@string/forgot_your_password" />
 
             </LinearLayout>
 
@@ -132,7 +136,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="80dp"
                 android:layout_marginRight="16dp"
-                android:src="@drawable/ic_baseline_add_24" />
+                android:src="@drawable/ic_baseline_add_24"
+                tools:ignore="RelativeOverlap"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
     <ProgressBar
@@ -150,6 +157,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:src="@drawable/app_logo" />
+        android:src="@drawable/app_logo"
+        android:contentDescription="@string/app_name" />
 
 </RelativeLayout>

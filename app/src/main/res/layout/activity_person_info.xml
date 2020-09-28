@@ -48,7 +48,8 @@
                             android:src="@drawable/person_info"
                             app:layout_constraintBottom_toBottomOf="@+id/textView4"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView4" />
+                            app:layout_constraintTop_toTopOf="@+id/textView4"
+                            android:contentDescription="@string/chargepassword" />
 
                         <TextView
                             android:id="@+id/textView4"
@@ -82,7 +83,8 @@
                             android:src="@drawable/ic_baseline_out_24"
                             app:layout_constraintBottom_toBottomOf="@+id/textView5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView5" />
+                            app:layout_constraintTop_toTopOf="@+id/textView5"
+                            android:contentDescription="@string/signout" />
 
                         <TextView
                             android:id="@+id/textView5"

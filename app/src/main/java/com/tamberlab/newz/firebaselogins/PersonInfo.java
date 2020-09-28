@@ -18,19 +18,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.tamberlab.newz.R;
-import com.tamberlab.newz.WebViewer;
-import com.tamberlab.newz.model.Articles;
-import com.tamberlab.newz.utils.NetworkCheck;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tamberlab.newz.R;
+import com.tamberlab.newz.WebViewer;
+import com.tamberlab.newz.model.Articles;
+import com.tamberlab.newz.utils.NetworkCheck;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +69,6 @@ public class PersonInfo extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
     String userId;
-    FragmentManager fragmentManager;
     private FirebaseRecyclerAdapter<Articles,ListAdapterHolder> adapter;
     private FirebaseRecyclerOptions<Articles> options;
     private boolean dataAvailable = false;
@@ -233,13 +231,11 @@ public class PersonInfo extends AppCompatActivity {
                 if (Math.abs(verticalOffset) >= 95) {
                     // Collapsed
                     signOutButton.setVisibility(View.INVISIBLE);
+                    chagePassword.setVisibility(View.INVISIBLE);
                 } else if (verticalOffset == 0) {
                     // Expanded
                     signOutButton.setVisibility(View.VISIBLE);
                     chagePassword.setVisibility(View.VISIBLE);
-                } else {
-                    // Somewhere in between
-                    chagePassword.setVisibility(View.INVISIBLE);
                 }
             }
         });

@@ -110,4 +110,11 @@
     <string name="get_news_for_current_location">Get News for Current Location</string>
     <string name="detect_nearby_locations">Detect Nearby Locations</string>
     <string name="get_the_newest_news_at_your_location">Get the newest News at your Location</string>
+    <string name="news_image">News Image</string>
+    <string name="new_password">New Password</string>
+    <string name="comfim_passowrd">Comfim Passowrd</string>
+    <string name="forgot_your_password">Forgot your Password ?</string>
+    <string name="close_signup">Close SignUp</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="open_in_browser">Open in Browser</string>
 </resources>

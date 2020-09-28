@@ -22,7 +22,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/app_logo" />
+        app:srcCompat="@drawable/app_logo"
+        android:contentDescription="@string/news_image" />
 
     <TextView
         android:id="@+id/firebase_news_TV"
@@ -30,7 +31,7 @@
         android:layout_height="78dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
+        android:text="@string/title"
         app:layout_constraintBottom_toBottomOf="@+id/firebase_news_IV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/firebase_news_IV"

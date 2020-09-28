@@ -31,9 +31,9 @@
                         android:id="@+id/appBarImage"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
-                        android:transitionName="thumbnail"
                         android:tint="#5F000000"
-                        android:src="@drawable/example" />
+                        android:src="@drawable/example"
+                        android:contentDescription="@string/news_image" />
                 </RelativeLayout>
 
                 <androidx.appcompat.widget.Toolbar
