@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.main_Container, moreFragment, "3").hide(moreFragment).commit();
         fm.beginTransaction().add(R.id.main_Container, localFragment, "2").hide(localFragment).commit();
         fm.beginTransaction().add(R.id.main_Container,homeFragment, "1").commit();
-        bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
+        bottomNavigationView.getMenu().findItem(R.id.navigation_Home).setChecked(true);
         toolbar_text.setText("Newz");
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.navigation_home:
+                    case R.id.navigation_Home:
                         fm.beginTransaction().hide(active).show(homeFragment).commit();
                         active = homeFragment;
                         item.setChecked(true);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
                         menu.findItem(R.id.app_bar_search).setVisible(true);
                         return true;
-                    case R.id.navigation_local:
+                    case R.id.navigation_Local:
                         fm.beginTransaction().hide(active).show(localFragment).commit();
                         active = localFragment;
                         item.setChecked(true);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL);
                         menu.findItem(R.id.app_bar_search).setVisible(true);
                         return true;
-                    case R.id.navigation_more:
+                    case R.id.navigation_More:
                         fm.beginTransaction().hide(active).show(moreFragment).commit();
                         active = moreFragment;
                         item.setChecked(true);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }else if (active == moreFragment){
             fm.beginTransaction().hide(active).show(homeFragment).commit();
             active = homeFragment;
-            bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.navigation_Home).setChecked(true);
             toolbar_text.setText("Newz");
             menu.findItem(R.id.app_bar_search).setVisible(true);
         }else {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 fm.beginTransaction().hide(active).show(homeFragment).commit();
                 active = homeFragment;
-                bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.navigation_Home).setChecked(true);
                 toolbar_text.setText("Newz");
                 menu.findItem(R.id.app_bar_search).setVisible(true);
             }

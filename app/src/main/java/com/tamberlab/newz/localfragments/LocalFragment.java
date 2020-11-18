@@ -1,6 +1,7 @@
 package com.tamberlab.newz.localfragments;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,17 +20,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.tamberlab.newz.R;
+import com.tamberlab.newz.neaybycities.Cities;
+import com.tamberlab.newz.neaybycities.CitiesModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,6 +67,9 @@ public class LocalFragment extends Fragment {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
+    // Location Data
+    private CitiesModel citiesModel;
+
     private FragmentManager fragmentManager;
     public static boolean isActive = false;
 
@@ -76,22 +86,52 @@ public class LocalFragment extends Fragment {
         currentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-                } else {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     getCurrentLocation();
                     progressBar.setVisibility(View.VISIBLE);
                     currentLocation.setVisibility(View.INVISIBLE);
+                } else {
+                    requestLocationPermission();
                 }
             }
         });
         nearbyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Getting cities data");
+                CitiesModel citiesData = new ViewModelProvider(requireActivity()).get(CitiesModel.class);
+                citiesData.getCities("weymouth","ma","United States").observe(getViewLifecycleOwner(), new Observer<List<Cities>>() {
+                    @Override
+                    public void onChanged(List<Cities> cities) {
+
+                    }
+                });
             }
         });
         return view;
+    }
+
+    private void requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Permission needed")
+                    .setMessage("This permission is needed to get local news.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+        }
     }
 
     private void getCurrentLocation() {
@@ -140,12 +180,11 @@ public class LocalFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_LOCATION && grantResults.length > 0){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                getCurrentLocation();
-            }else {
-                Toast.makeText(getContext(),"Permission Denied",Toast.LENGTH_SHORT).show();
+        if (requestCode == REQUEST_CODE_LOCATION)  {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "Permission GRANTED", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Permission DENIED", Toast.LENGTH_SHORT).show();
             }
         }
     }
