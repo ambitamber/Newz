@@ -117,4 +117,5 @@
     <string name="close_signup">Close SignUp</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="open_in_browser">Open in Browser</string>
+    <string name="videos">Videos</string>
 </resources>

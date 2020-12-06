@@ -14,6 +14,7 @@ import com.tamberlab.newz.R;
 import butterknife.ButterKnife;
 
 public class VideosFragment extends Fragment {
+    public static final int TAB_POSITION = 2;
 
     public VideosFragment(){
 

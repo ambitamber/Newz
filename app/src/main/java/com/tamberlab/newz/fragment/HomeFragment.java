@@ -30,6 +30,7 @@ public class HomeFragment  extends Fragment {
     AppBarLayout appBarLayout;
 
     TabAdapter tabAdapter;
+    public static final int TAB_POSITION = 0;
 
     public HomeFragment(){
 

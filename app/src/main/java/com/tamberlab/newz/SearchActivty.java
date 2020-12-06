@@ -206,7 +206,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
         }
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(@NotNull String query) {
                 mQuery = query;
                 search_Word.setText(mQuery);
                 setupSharedPreferences(mQuery);
@@ -214,7 +214,7 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(@NotNull String newText) {
                 return false;
             }
         });
@@ -286,7 +286,9 @@ public class SearchActivty extends AppCompatActivity implements SharedPreference
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        if (sharedPreferences != null){
+            sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        }
     }
 
     private void showData(){

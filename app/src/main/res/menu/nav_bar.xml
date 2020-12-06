@@ -2,13 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/local"
-        android:id="@+id/navigation_Local"
-        android:icon="@drawable/ic_baseline_location_on_24"/>
     <item android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
         android:id="@+id/navigation_Home"/>
-    <item android:title="Videos"
+    <item android:title="@string/local"
+        android:id="@+id/navigation_Local"
+        android:icon="@drawable/ic_baseline_location_on_24"/>
+    <item android:title="@string/videos"
         android:id="@+id/navigation_Videos"
         android:icon="@drawable/ic_baseline_video_24"/>
     <item android:title="@string/setting"

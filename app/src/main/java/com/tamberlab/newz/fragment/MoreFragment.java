@@ -39,6 +39,7 @@ public class MoreFragment extends Fragment {
 
 
     FragmentManager fragmentManager;
+    public static final int TAB_POSITION = 3;
 
     public MoreFragment(){
 

@@ -72,6 +72,7 @@ public class LocalFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     public static boolean isActive = false;
+    public static final int TAB_POSITION = 1;
 
     public LocalFragment() {
 
