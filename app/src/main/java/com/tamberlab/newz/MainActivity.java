@@ -17,6 +17,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tamberlab.newz.adapter.FragmentUpdateCallback;
 import com.tamberlab.newz.adapter.MainFragmentPagerAdapter;
+import com.tamberlab.newz.adapter.NoSwipePager;
 import com.tamberlab.newz.fragment.HomeFragment;
 import com.tamberlab.newz.fragment.MoreFragment;
 import com.tamberlab.newz.fragment.VideosFragment;
@@ -37,12 +38,13 @@ public class MainActivity extends AppCompatActivity implements FragmentUpdateCal
     @BindView(R.id.toolbar_text)
     TextView toolbar_text;
     @BindView(R.id.main_Container)
-    ViewPager viewPager;
+    NoSwipePager viewPager;
 
     Menu menu;
     MainFragmentPagerAdapter mPagerAdapter;
     private int mCurrentTabPosition;
     AppBarLayout.LayoutParams params;
+    LocalFragment localFragment = new LocalFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements FragmentUpdateCal
         mPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
         viewPager.setOffscreenPageLimit(4);
+        viewPager.setPagingEnabled(false);
+
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
         toolbar_text.setText("Newz");
@@ -101,9 +105,25 @@ public class MainActivity extends AppCompatActivity implements FragmentUpdateCal
 
     @Override
     public void onBackPressed() {
-        if (!mPagerAdapter.removeFragment(mPagerAdapter.getItem(mCurrentTabPosition), mCurrentTabPosition)) {
-            finish();
+        if (!LocalFragment.isActive){
+            if (mCurrentTabPosition != HomeFragment.TAB_POSITION){
+                mCurrentTabPosition = HomeFragment.TAB_POSITION;
+                viewPager.setCurrentItem(mCurrentTabPosition);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                menu.findItem(R.id.app_bar_search).setVisible(true);
+                toolbar_text.setText("Newz");
+                bottomNavigationView.getMenu().findItem(R.id.navigation_Home).setChecked(true);
+            }else{
+                if (!mPagerAdapter.removeFragment(mPagerAdapter.getItem(mCurrentTabPosition), mCurrentTabPosition)) {
+                    finish();
+                }
+            }
+        }else{
+            getSupportFragmentManager().popBackStack();
+            LocalFragment.isActive = false;
+            localFragment.showHomeLocal();
         }
+
     }
 
     @Override

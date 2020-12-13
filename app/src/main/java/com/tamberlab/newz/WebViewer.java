@@ -47,6 +47,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -149,7 +151,7 @@ public class WebViewer extends AppCompatActivity {
             startActivity(shareIntent);
         });
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         loadWebViewer();

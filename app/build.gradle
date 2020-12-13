@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/Singh/Documents/GitHub/Newz/keystore.jks')
+            storeFile file('C:\\Users\\ambi.singh\\Documents\\GitHub\\Newz\\keystore.jks')
             storePassword 'punjabi92'
             keyAlias 'Tamber Lab'
             keyPassword 'punjabi92'
@@ -83,5 +83,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:6.3.0'
-    implementation 'com.google.android.gms:play-services-ads:19.5.0'
+    implementation 'com.google.android.gms:play-services-ads:19.6.0'
+
+    //For Fragment navigation
+    implementation "androidx.navigation:navigation-fragment:2.3.2"
+    implementation "androidx.navigation:navigation-ui:2.3.2"
+
+    //Bing Services
+    implementation "com.microsoft.azure.cognitiveservices:azure-cognitiveservices-newssearch:0.0.1-beta"
 }
